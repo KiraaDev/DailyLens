@@ -8,7 +8,7 @@ import FeaturedNewsCard from "../components/FeaturedNewsCard";
 const LatestNews: React.FC = () => {
 
     const [news, setNews] = useState<News[]>([])
-    const [featuredNews, setFeaturedNews] = useState<News>()
+    const [featuredNews, setFeaturedNews] = useState<News | null>(null)
 
     const [loading, isLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
@@ -19,9 +19,10 @@ const LatestNews: React.FC = () => {
     const categoryParam = searchParams.get('category');
 
     useEffect(() => {
+        isLoading(true)
         setError('')
         setNews([])
-        isLoading(true)
+        setFeaturedNews(null)
         if (!Categories.some(category => category.tag === categoryParam)) {
             navigate('/news/latest')
         }
@@ -66,7 +67,7 @@ const LatestNews: React.FC = () => {
             </div>
             {loading && (<p>Loading...</p>)}
             {error ? <p className=" text-red-800">{error}</p> : ''}
-            <div>
+            {/* <div>
                 {
                     news.length != 0 ? (
                         news.map((news, index) => (
@@ -76,8 +77,12 @@ const LatestNews: React.FC = () => {
                         ))
                     ) : ''
                 }
-            </div>
-            <FeaturedNewsCard />
+            </div> */}
+            {featuredNews &&
+                <FeaturedNewsCard
+                    news={featuredNews}
+                />
+            }
         </div>
     )
 }

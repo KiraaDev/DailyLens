@@ -1,16 +1,20 @@
 import React from 'react'
+import { News } from '../types/news'
 
+interface FeaturedNewsCardProps {
+    news: News
+}
 
-const FeaturedNewsCard: React.FC = () => {
-    
+const FeaturedNewsCard: React.FC<FeaturedNewsCardProps> = ({ news }) => {
+
     return (
         <div className="relative w-full max-w-3xl h-90 rounded-xl overflow-hidden shadow-lg">
 
             {/* Background Image */}
             <img
-                src={'https://gizmodo.com/app/uploads/2025/01/Disney-Experiences-Epcot-International-Festival-of-the-Arts-Artists-Instagram.jpg'}
+                src={news.urlToImage}
                 alt="Background"
-                className="absolute inset-0 w-full h-full object-cover z-0"
+                className="absolute inset-0 w-full h-full object-cover z-0 opacity-85"
             />
 
             {/* Overlay */}
@@ -21,8 +25,10 @@ const FeaturedNewsCard: React.FC = () => {
                 <div className=' absolute top-0 left-0 bg-red-500 px-3 font-black'>
                     <p>FEATURED NEWS</p>
                 </div>
-                <h2 className="text-2xl font-bold">{'sdf'}</h2>
-                <p className="text-sm mt-2">{'sdf'}</p>
+                <div className='absolute bottom-0 left-0 p-5'>
+                    <h2 className="text-2xl font-bold">{news.title}</h2>
+                    <p className="text-sm mt-2">{news.description}</p>
+                </div>
             </div>
         </div>
     )
