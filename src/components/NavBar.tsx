@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 import logo from '../assets/logo.svg';
 import { MenuLinks } from '../config/menu';
 import { Link, useLocation } from 'react-router';
 
-function NavBar() {
+const NavBar: React.FC = () => {
 
   const [nav, setNav] = useState<boolean>(false)
 
@@ -58,7 +58,7 @@ function NavBar() {
 
       </div>
       {/* mobile view */}
-      <div className={nav ? 'flex flex-col items-start absolute left-0 top-0 bg-[#eaeaea] w-60 h-screen md:hidden z-20' : 'hidden'}>
+      <div className={nav ? 'flex fixed flex-col items-start left-0 top-0 bg-[#eaeaea] w-60 min-h-svh md:hidden z-20' : 'hidden'}>
         <div className=' flex justify-around items-center gap-10 flex-row w-full h-20'>
           <img src={logo} alt="Logo" className=' h-10' />
           <button className='cursor-pointer'

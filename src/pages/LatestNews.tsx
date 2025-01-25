@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router"
 import { Categories } from "../config/category"
-import { useEffect, useState } from "react";
 import { News } from "../types/news";
 import axios from 'axios'
+import FeaturedNewsCard from "../components/FeaturedNewsCard";
 
-function LatestNews() {
+const LatestNews: React.FC = () => {
 
     const [news, setNews] = useState<News[]>([])
     const [featuredNews, setFeaturedNews] = useState<News>()
@@ -18,6 +19,7 @@ function LatestNews() {
     const categoryParam = searchParams.get('category');
 
     useEffect(() => {
+        setError('')
         setNews([])
         isLoading(true)
         if (!Categories.some(category => category.tag === categoryParam)) {
@@ -31,6 +33,7 @@ function LatestNews() {
 
                 setNews(response.data.articles)
                 setFeaturedNews(response.data.articles[0])
+                console.log(response.data.articles[0])
             } catch (error) {
                 console.error(error)
                 setError('Failed to fetch data :(')
@@ -48,13 +51,13 @@ function LatestNews() {
     }
 
     return (
-        <div className='h-full flex flex-col gap-5 w-[60%] '>
+        <div className='min-h-full flex flex-col gap-5 w-[60%] '>
             <h1 className=" text-2xl lg:text-4xl">LATEST NEWS</h1>
             <div className="flex gap-5 flex-wrap">
                 {Categories.map((category, index) => (
                     <button
                         onClick={() => changeCategory(category.tag)}
-                        className={categoryParam === category.tag ? "text-xs border-[1px] border-[#af695c] text-[#af695c] px-3 rounded-xl cursor-pointer md:text-lg" : "text-xs border-[1px] px-3 rounded-xl cursor-pointer md:text-lg"}
+                        className={categoryParam === category.tag ? "text-xs border-[1px] border-[#af695c] text-[#af695c] px-3 rounded-xl cursor-pointer md:text-sm" : "text-xs border-[1px] px-3 rounded-xl cursor-pointer md:text-sm"}
                         key={index}
                     >
                         {category.name}
@@ -62,7 +65,7 @@ function LatestNews() {
                 ))}
             </div>
             {loading && (<p>Loading...</p>)}
-            {error ? <p className=" text-red-300">{error}</p> : ''}
+            {error ? <p className=" text-red-800">{error}</p> : ''}
             <div>
                 {
                     news.length != 0 ? (
@@ -74,6 +77,7 @@ function LatestNews() {
                     ) : ''
                 }
             </div>
+            <FeaturedNewsCard />
         </div>
     )
 }
