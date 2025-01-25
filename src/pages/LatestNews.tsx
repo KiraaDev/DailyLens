@@ -18,6 +18,10 @@ const LatestNews: React.FC = () => {
 
     const categoryParam = searchParams.get('category');
 
+    const currentDate = new Date();
+
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
     useEffect(() => {
         isLoading(true)
         setError('')
@@ -30,7 +34,7 @@ const LatestNews: React.FC = () => {
         const getLatestNews = async () => {
 
             try {
-                const response = await axios.get(`https://newsapi.org/v2/everything?q=${categoryParam === null ? 'politics' : categoryParam}&from=2025-01-24&to=2025-01-24&sortBy=popularity&pageSize=30&page=1&apiKey=${import.meta.env.VITE_API_KEY}`);
+                const response = await axios.get(`https://newsapi.org/v2/everything?q=${categoryParam === null ? 'politics' : categoryParam}&from=${firstDayOfMonth.toISOString().split('T')[0]}&to=${currentDate.toISOString().split('T')[0]}&sortBy=popularity&pageSize=30&page=1&apiKey=${import.meta.env.VITE_API_KEY}`);
 
                 setNews(response.data.articles)
                 setFeaturedNews(response.data.articles[0])

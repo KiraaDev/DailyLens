@@ -26,8 +26,18 @@ const FeaturedNewsCard: React.FC<FeaturedNewsCardProps> = ({ news }) => {
                     <p>FEATURED NEWS</p>
                 </div>
                 <div className='absolute bottom-0 left-0 p-5'>
+                    <div className='flex gap-10'>
+                        <p>{news.author}</p>
+                        <p className="">{new Date(news.publishedAt).toDateString()}</p>
+                    </div>
                     <h2 className="text-2xl font-bold">{news.title}</h2>
                     <p className="text-sm mt-2">{news.description}</p>
+                    {news.url ?
+                        <button className="mt-3 p-2 h-10 inline text-sm font-medium leading-5 shadow text-[#f9f4ed] transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-[#af695c] active:bg-[#af695c] hover:bg-[#814e45]">
+                            <a href={news.url} target='_blank'>View Article</a>
+                        </button>
+                        : ''
+                    }
                 </div>
             </div>
         </div>
