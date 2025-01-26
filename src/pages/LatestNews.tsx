@@ -20,8 +20,6 @@ const LatestNews: React.FC = () => {
 
     const currentDate = new Date();
 
-    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-
     useEffect(() => {
         isLoading(true)
         setError('')
