@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router"
 import { Categories } from "../config/category"
 import { News } from "../types/news";
 import axios from 'axios'
-import FeaturedNewsCard from "../components/FeaturedNewsCard";
+import NewsLayout from "../components/layout/NewsLayout";
 
 const LatestNews: React.FC = () => {
 
@@ -34,11 +34,10 @@ const LatestNews: React.FC = () => {
         const getLatestNews = async () => {
 
             try {
-                const response = await axios.get(`https://newsapi.org/v2/everything?q=${categoryParam === null ? 'politics' : categoryParam}&from=${firstDayOfMonth.toISOString().split('T')[0]}&to=${currentDate.toISOString().split('T')[0]}&sortBy=popularity&pageSize=30&page=1&apiKey=${import.meta.env.VITE_API_KEY}`);
+                const response = await axios.get(`https://newsapi.org/v2/everything?q=${categoryParam === null ? 'politics' : categoryParam}&from=2025-01-01&to=${currentDate.toISOString().split('T')[0]}&sortBy=popularity&pageSize=30&page=1&apiKey=${import.meta.env.VITE_API_KEY}`);
 
-                setNews(response.data.articles)
                 setFeaturedNews(response.data.articles[0])
-                console.log(response.data.articles[0])
+                setNews(response.data.articles)
             } catch (error) {
                 console.error(error)
                 setError('Failed to fetch data :(')
@@ -52,11 +51,15 @@ const LatestNews: React.FC = () => {
 
 
     const changeCategory = (category: string) => {
+
+        if(category === categoryParam){
+            return
+        }
         navigate(`/news/latest?category=${category}`)
     }
 
     return (
-        <div className='min-h-full flex flex-col gap-5 w-[60%] '>
+        <div className='min-h-full flex flex-col gap-5 w-[80%] md:w-[75%] lg:w-[60%] mb-10'>
             <h1 className=" text-2xl lg:text-4xl">LATEST NEWS</h1>
             <div className="flex gap-5 flex-wrap">
                 {Categories.map((category, index) => (
@@ -71,22 +74,13 @@ const LatestNews: React.FC = () => {
             </div>
             {loading && (<p>Loading...</p>)}
             {error ? <p className=" text-red-800">{error}</p> : ''}
-            {/* <div>
-                {
-                    news.length != 0 ? (
-                        news.map((news, index) => (
-                            <div key={index}>
-                                <p>{news.author}</p>
-                            </div>
-                        ))
-                    ) : ''
-                }
-            </div> */}
-            {featuredNews &&
-                <FeaturedNewsCard
-                    news={featuredNews}
+            {featuredNews && news &&
+                <NewsLayout
+                    featuredNews={featuredNews}
+                    news={news}
                 />
             }
+
         </div>
     )
 }

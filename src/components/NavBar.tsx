@@ -57,9 +57,10 @@ const NavBar: React.FC = () => {
         </label>
 
       </div>
+      
       {/* mobile view */}
-      <div className={nav ? 'flex fixed flex-col items-start left-0 top-0 bg-[#eaeaea] w-60 min-h-svh md:hidden z-20' : 'hidden'}>
-        <div className=' flex justify-around items-center gap-10 flex-row w-full h-20'>
+      <div className={nav ? 'flex fixed flex-col items-start left-0 top-0 bg-[#eaeaea] w-60 min-h-svh md:hidden z-50' : 'hidden'}>
+        <div className=' flex justify-around items-center gap-10 flex-row w-full h-20 mt-10'>
           <img src={logo} alt="Logo" className=' h-10' />
           <button className='cursor-pointer'
             onClick={toggleNav}
