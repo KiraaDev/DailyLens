@@ -32,7 +32,13 @@ const LatestNews: React.FC = () => {
         const getLatestNews = async () => {
 
             try {
-                const response = await axios.get(`https://newsapi.org/v2/everything?q=${categoryParam === null ? 'politics' : categoryParam}&from=2025-01-01&to=${currentDate.toISOString().split('T')[0]}&sortBy=popularity&pageSize=30&page=1&apiKey=${import.meta.env.VITE_API_KEY}`);
+                const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/everything?q=${categoryParam === null ? 'politics' : categoryParam}&from=2025-01-01&to=${currentDate.toISOString().split('T')[0]}&sortBy=popularity&pageSize=30&page=1&apiKey=${import.meta.env.VITE_API_KEY}`, {
+                    method: 'GET',
+                    headers: {
+                        'Origin': 'http://localhost',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
 
                 setFeaturedNews(response.data.articles[0])
                 setNews(response.data.articles)
@@ -50,7 +56,7 @@ const LatestNews: React.FC = () => {
 
     const changeCategory = (category: string) => {
 
-        if(category === categoryParam){
+        if (category === categoryParam) {
             return
         }
         navigate(`/news/latest?category=${category}`)
