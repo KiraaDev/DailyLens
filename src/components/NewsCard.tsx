@@ -1,7 +1,6 @@
 import React from "react";
 import { News } from "../types/news";
 import default_bg from '../assets/default_bg.jpg';
-import { Link } from "react-router";
 
 interface NewsCardProps {
     news: News
@@ -22,7 +21,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
             {
                 news.url ? (
                     <p className=" p-3 text-xs">
-                        <Link to={news.url} target="_blank" className="underline hover:font-bold">View Article</Link>
+                        <a href={news.url} target="_blank" className="underline hover:font-bold">View Article</a>
                     </p>
                 ) : ''
             }
